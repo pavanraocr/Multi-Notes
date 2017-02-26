@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Multi-Notes</string>
+    <string name="lbl_newNote">New Note</string>
+    <string name="lbl_appInfo">About App</string>
+    <string name="txt_noTitle">No Title</string>
+    <string name="txt_noDate">No Date</string>
+    <string name="txt_EmptyNote">Empty note</string>
+    <string name="jsonFileName">multi_Notes_Save_Data</string>
+    <string name="lastModifiedJSONKey">lastModified</string>
+    <string name="scribbleJSONKey">scribble</string>
+    <string name="titleJSONKey">title</string>
+    <string name="idJSONKey">id</string>
+    <string name="save">Save</string>
+    <string name="lastModifiedTemplate">Last Update:</string>
+    <string name="encoding">UTF-8</string>
+    <string name="scribbleHint">Your notes goes here</string>
+    <string name="LastUpdateStr">Last Updated: </string>
+    <!--  Notification Messages  -->
+    <string name="MsgFileNotSaved">The note was not saved</string>
+    <string name="titleHint">Your title goes here</string>
+    <string name="saveStatus">saveStatus</string>
+    <string name="saveToastMsg">Note has been saved</string>
+    <string name="confirmDeleteLbl">Confirm Delete</string>
+    <string name="yesDialogBtnLbl">Yes</string>
+    <string name="NotSavedDialogTitle">Your Note is Not Saved!</string>
+    <string name="noDialogBtnLbl">No</string>
+    <string name="SaveNoteDialog">Save note:</string>
 </resources>
