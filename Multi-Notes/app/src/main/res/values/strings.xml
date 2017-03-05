@@ -19,10 +19,15 @@
     <string name="MsgFileNotSaved">The note was not saved</string>
     <string name="titleHint">Your title goes here</string>
     <string name="saveStatus">saveStatus</string>
-    <string name="saveToastMsg">Note has been saved</string>
+    <string name="saveToastMsg">Notes has been saved</string>
     <string name="confirmDeleteLbl">Confirm Delete</string>
     <string name="yesDialogBtnLbl">Yes</string>
     <string name="NotSavedDialogTitle">Your Note is Not Saved!</string>
     <string name="noDialogBtnLbl">No</string>
     <string name="SaveNoteDialog">Save note:</string>
+    <string name="notSaveToastMsg">Notes were not saved</string>
+    <string name="versionTV">Version</string>
+    <string name="copyRightTextView">\u00A9 2017, Pavan Rao C R</string>
+    <string name="cancelDialogLbl">Cancel</string>
+    <string name="NoTitleToast">Note not saved as title was not present</string>
 </resources>

@@ -3,14 +3,13 @@ package com.example.pavan.multi_notes;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -40,18 +39,19 @@ public class NoteView extends AppCompatActivity {
 
         saveStatus = false;
 
-        if(bun != null){
+        if (bun != null) {
             oriTitle = bun.getString(getString(R.string.titleJSONKey));
             oriScribbleText = bun.getString(getString(R.string.scribbleJSONKey));
             id = bun.getInt(getString(R.string.idJSONKey));
 
             titleEdit.setText(oriTitle);
             scribbleEdit.setText(oriScribbleText);
-        }
-        else{
+        } else {
             oriTitle = "";
             oriScribbleText = "";
         }
+
+        scribbleEdit.setMovementMethod(new ScrollingMovementMethod());
     }
 
     @Override
@@ -116,28 +116,38 @@ public class NoteView extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //The user has cancelled the action
+                saveStatus = false;
+                Intent data = new Intent();
+                data = updateIntentForSave(data);
+                setResult(RESULT_OK, data);
+                NoteView.super.onBackPressed();
             }
         });
 
-        builder.setTitle(getString(R.string.NotSavedDialogTitle));
-        final TextView tv = new TextView(this);
-        tv.setText(getString(R.string.SaveNoteDialog) + titleEdit.getText().toString());
-        builder.setView(tv);
+        String titleStr = getString(R.string.NotSavedDialogTitle) + "\n"
+                + getString(R.string.SaveNoteDialog) + " \""
+                + titleEdit.getText().toString() + "\" ?";
+        builder.setTitle(titleStr);
 
         AlertDialog dialog = builder.create();
         dialog.show();
-
-        //super.onBackPressed();
     }
 
     /**
      * This checks if the user has changed the data from the time he has opened the note
      */
     private void checkIfDataHasChanged() {
-        if((!oriTitle.equals(titleEdit.getText().toString()) &&
-                !titleEdit.getText().toString().isEmpty()) ||
-                    !oriScribbleText.equals(scribbleEdit.getText().toString()))
+        if((!oriTitle.equals(titleEdit.getText().toString()) ||
+                !oriScribbleText.equals(scribbleEdit.getText().toString())) &&
+                    !titleEdit.getText().toString().isEmpty())
             saveStatus = true;
+        else{
+            saveStatus = false;
+            if(titleEdit.getText().toString().isEmpty()){
+                Toast.makeText(this, R.string.NoTitleToast, Toast.LENGTH_SHORT).show();
+            }
+        }
+
 
         return;
     }

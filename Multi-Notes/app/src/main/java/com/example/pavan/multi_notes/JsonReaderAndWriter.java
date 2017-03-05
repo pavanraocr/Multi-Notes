@@ -24,7 +24,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class JsonReaderAndWriter {
 
     private final static String TAG = "jsonReaderAndWriter";
-    private List<Note> listOfNotes = new ArrayList<>();
+    private List<Note> listOfNotes;
 
     /* Getter and Setters */
     public List<Note> getListOfNotes() {
@@ -58,9 +58,11 @@ public class JsonReaderAndWriter {
         try {
             JsonWriter jsonWrtr = new JsonWriter(new OutputStreamWriter(fs, "UTF-8"));
             jsonWrtr.setIndent("  ");
+            jsonWrtr.beginArray();
             for(Note n: listOfNotes){
                 writeNote(c, jsonWrtr, n);
             }
+            jsonWrtr.endArray();
             jsonWrtr.close();
 
             Log.d(TAG, "File saved\n");
@@ -75,7 +77,6 @@ public class JsonReaderAndWriter {
 
     private void writeNote(Context c, JsonWriter writer, Note note) throws IOException {
         writer.beginObject();
-        writer.name(c.getString(R.string.idJSONKey)).value(note.getId());
         writer.name(c.getString(R.string.lastModifiedJSONKey)).value(note.getLastModifiedTimestamp());
         writer.name(c.getString(R.string.scribbleJSONKey)).value(note.getScribbleText());
         writer.name(c.getString(R.string.titleJSONKey)).value(note.getTitle());
@@ -88,13 +89,14 @@ public class JsonReaderAndWriter {
      */
     public boolean loadNotes(Context c){
         InputStream fs;
+        //listOfNotes = new ArrayList<Note>();
+        listOfNotes.clear();
 
         try {
             fs = c.openFileInput(c.getString(R.string.jsonFileName));
         } catch (FileNotFoundException e) {
             //This is the first time the app has opened since the last time the data of the app was cleared
             Log.d(TAG, "No JSON file for loading");
-            listOfNotes = new ArrayList<Note>();
             return true;
         }
         catch (Exception e){
@@ -111,8 +113,6 @@ public class JsonReaderAndWriter {
 
         try{
             JsonReader rdr = new JsonReader(new InputStreamReader(fs, "UTF-8"));
-
-            listOfNotes = new ArrayList<Note>();
 
             try{
                 readAllNotes(c, rdr);
@@ -135,6 +135,7 @@ public class JsonReaderAndWriter {
      * @throws IOException - If the rdr fails to read the fails
      */
     private void readAllNotes(Context c, JsonReader rdr) throws IOException {
+        Log.d(TAG, "reading All notes");
         rdr.beginArray();
 
         while (rdr.hasNext()){
@@ -142,6 +143,7 @@ public class JsonReaderAndWriter {
         }
 
         rdr.endArray();
+        Log.d(TAG, "reading all notes done");
     }
 
     /**
@@ -152,6 +154,7 @@ public class JsonReaderAndWriter {
      * @throws IOException
      */
     private Note parseNote(Context c, JsonReader rdr) throws IOException {
+        Log.d(TAG, "Parsing notes now");
         Note newNote = new Note();
         int id = 0;
 
@@ -159,16 +162,13 @@ public class JsonReaderAndWriter {
         while (rdr.hasNext()){
             String name = rdr.nextName();
 
-            if(name.equals(R.string.idJSONKey)){
-                newNote.setId(id = Math.max(rdr.nextInt(), id));
-            }
-            else if(name.equals(R.string.titleJSONKey)){
+            if(name.equals(c.getString(R.string.titleJSONKey))){
                 newNote.setTitle(rdr.nextString());
             }
-            else if(name.equals(R.string.lastModifiedJSONKey)){
+            else if(name.equals(c.getString(R.string.lastModifiedJSONKey))){
                 newNote.setLastModifiedTimestamp(rdr.nextString());
             }
-            else if(name.equals(R.string.scribbleJSONKey)){
+            else if(name.equals(c.getString(R.string.scribbleJSONKey))){
                 newNote.setScribbleText(rdr.nextString());
             }
             else{

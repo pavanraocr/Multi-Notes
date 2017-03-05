@@ -11,7 +11,7 @@
     <EditText
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textAppearance="@android:style/TextAppearance.Material.Headline"
         android:id="@+id/title"
         tools:layout_constraintTop_creator="1"
         android:layout_marginTop="16dp"
@@ -22,7 +22,9 @@
         app:layout_constraintRight_toRightOf="parent"
         android:hint="@string/titleHint"
         android:maxLines="1"
-        android:background="@color/cardview_background"/>
+        android:background="@color/cardview_background"
+        android:lines="1"
+        android:inputType="text" />
 
     <EditText
         android:layout_width="0dp"

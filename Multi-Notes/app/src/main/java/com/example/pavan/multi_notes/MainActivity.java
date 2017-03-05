@@ -1,9 +1,10 @@
 package com.example.pavan.multi_notes;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.Tag;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,9 +23,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener{
 
     private static final String TAG = "MainActivity";
-    private List<Note> notesList = new ArrayList<> ();
+    private List<Note> notesList = new ArrayList<>();
     private RecyclerView rv_notes;
     private NotesAdapter notesAdapterObj;
+    private JsonReaderAndWriter readWriteObj;
+    private boolean isAsyncTaskRunning;
+    private boolean isWriteToFilePending;
+    private boolean isIntentToEditNoteView;
 
     /*------- Codes that relate to intent -----*/
     public final int itemClickReqCode = 1;
@@ -38,18 +43,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         rv_notes = (RecyclerView) findViewById(R.id.recyclerView);
         notesAdapterObj = new NotesAdapter(notesList, this);
+        readWriteObj = new JsonReaderAndWriter();
 
         rv_notes.setAdapter(notesAdapterObj);
         rv_notes.setLayoutManager(new LinearLayoutManager(this));
+        rv_notes.setHasFixedSize(false);
 
-        // Make some data - not always needed - used to fill list
-        for (int i = 0; i < 20; i++) {
-            notesList.add(new Note("Title "+String.valueOf(i), "Bla", "Text " +
-                    "this is a very very very very very very very very very " +
-                    "very very very very very very very very very very very very " +
-                    "very very very very very very very very very " +
-                    "very very very  long message"+String.valueOf(i)));
-        }
+        isAsyncTaskRunning = false;
+        isWriteToFilePending = false;
+        isIntentToEditNoteView = false;
+
+        loadNotes();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isIntentToEditNoteView = false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "the activity has gone into pause");
+        if(isWriteToFilePending && saveNotes() && !isIntentToEditNoteView)
+            Toast.makeText(this, getString(R.string.saveToastMsg), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -60,18 +78,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()){
             case R.id.menu_addNote:
-                Toast.makeText(this, "add note selected", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, NoteView.class);
+                //Toast.makeText(this, "add note selected", Toast.LENGTH_SHORT).show();
+                intent = new Intent(MainActivity.this, NoteView.class);
                 intent.putExtra(getString(R.string.titleJSONKey), "");
                 intent.putExtra(getString(R.string.lastModifiedJSONKey), DateFormat.getDateTimeInstance().format(new Date()));
                 intent.putExtra(getString(R.string.scribbleJSONKey), "");
-
+                isIntentToEditNoteView = true;
                 startActivityForResult(intent, newNoteReqCode);
                 break;
             case R.id.menu_appInfo:
-                Toast.makeText(this, "app info selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "app info selected", Toast.LENGTH_SHORT).show();
+                intent = new Intent(MainActivity.this, Infomation.class);
+                isIntentToEditNoteView = true;
+                startActivity(intent);
                 break;
             default:
                 Toast.makeText(this, "selection unknown", Toast.LENGTH_SHORT).show();
@@ -90,8 +112,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra(getString(R.string.titleJSONKey), n.getTitle());
         intent.putExtra(getString(R.string.lastModifiedJSONKey), n.getLastModifiedTimestamp());
         intent.putExtra(getString(R.string.scribbleJSONKey), n.getScribbleText());
-        //intent.putExtra(getString(R.string.idJSONKey), n.getId());
         intent.putExtra(getString(R.string.idJSONKey), pos);
+        isIntentToEditNoteView = true;
 
         startActivityForResult(intent, itemClickReqCode);
     }
@@ -105,7 +127,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 notesList.remove(pos);
-                notesAdapterObj.notifyDataSetChanged();
+                //notesAdapterObj.notifyDataSetChanged();
+                refreshRecyclerView();
+                isWriteToFilePending = true;
+            }
+        });
+
+        builder.setNegativeButton(getString(R.string.cancelDialogLbl), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //cancel is pressed by the user do nothing
             }
         });
         builder.setTitle("Confirm delete Note?");
@@ -132,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "Intent has come with results");
         int id = data.getIntExtra(getString(R.string.idJSONKey), -1);
 
         if(requestCode == itemClickReqCode){
@@ -140,19 +171,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String status = data.getStringExtra(getString(R.string.saveStatus));
 
                 if(status.equals("true")){
+                    isWriteToFilePending = true;
                     Note tempNote = retrieveIntentResultData(data);
-
-                    /*int i;
-                    for(i = 0; i < notesList.size(); i++){
-                        Note note = notesList.get(i);
-
-                        if(note.getId() == id){
-                            note.setTitle(tempNote.getTitle());
-                            note.setScribbleText(tempNote.getScribbleText());
-                            note.setLastModifiedTimestamp(tempNote.getLastModifiedTimestamp());
-                            break;
-                        }
-                    }*/
 
                     if(id < notesList.size() && id >= 0){
                         Note note = notesList.get(id);
@@ -163,7 +183,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         notesList.add(0, note);
                     }
 
-                    notesAdapterObj.notifyDataSetChanged();
+                    //notesAdapterObj.notifyDataSetChanged();
+                    refreshRecyclerView();
                 }
             }
         }
@@ -172,14 +193,87 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String status = data.getStringExtra(getString(R.string.saveStatus));
 
                 if(status.equals("true")){
+                    isWriteToFilePending = true;
                     Note tempNote = retrieveIntentResultData(data);
                     notesList.add(0, tempNote);
-                    notesAdapterObj.notifyDataSetChanged();
+                    //notesAdapterObj.notifyDataSetChanged();
+                    refreshRecyclerView();
                 }
             }
         }
         else{
             Log.d(TAG, "This is unrecognized result code" + requestCode);
         }
+
+        isIntentToEditNoteView = false;
+    }
+
+    class ReadAsync extends AsyncTask<Context, Void, Boolean>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            notesList.clear();
+            readWriteObj.setListOfNotes(notesList);
+        }
+
+        @Override
+        protected Boolean doInBackground(Context... params) {
+            Log.d(TAG, "async task started with notelist size = " + String.valueOf(notesList.size()));
+            isAsyncTaskRunning = true;
+            boolean loadStatus = readWriteObj.loadNotes(params[0]);
+            isAsyncTaskRunning = false;
+            Log.d(TAG, "async task ended and returning status " + String.valueOf(loadStatus));
+
+            return loadStatus;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean loadStatus) {
+            super.onPostExecute(loadStatus);
+
+            if(loadStatus){
+                //notesList.addAll(readWriteObj.getListOfNotes());
+                Log.d(TAG, "onPostexe notelist size = " + String.valueOf(notesList.size()));
+                //notesAdapterObj.notifyDataSetChanged();
+                refreshRecyclerView();
+            }
+            else{
+                Log.d(TAG, "Load error");
+            }
+        }
+    }
+
+    private void refreshRecyclerView(){
+        notesAdapterObj.notifyDataSetChanged();
+        rv_notes.forceLayout();
+    }
+
+    /**
+     * This method invokes an async task that loads the notes from a JSON file if it exists
+     * @return True if the task was started and false if there already exists an async task
+     */
+    private boolean loadNotes() {
+        if(isAsyncTaskRunning){
+            Log.d(TAG, "There is an async task already running");
+            return false;
+        }
+
+        new ReadAsync().execute(getApplication());
+        return true;
+    }
+
+    /**
+     * This saves the current list of all the notes into a JSON file
+     * @return
+     */
+    private boolean saveNotes(){
+        Log.d(TAG, "saving Note with notelist size = " + String.valueOf(notesList.size()));
+        readWriteObj.setListOfNotes(notesList);
+        boolean status =  readWriteObj.SaveNotes(getApplicationContext());
+        if(status)
+            isWriteToFilePending = false;
+
+        Log.d(TAG, "After saving Note with notelist size = " + String.valueOf(notesList.size()));
+        return status;
     }
 }

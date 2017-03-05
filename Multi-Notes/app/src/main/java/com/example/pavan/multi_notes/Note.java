@@ -23,7 +23,6 @@ public class Note {
     private String title;
     private String lastModifiedTimestamp;
     private String scribbleText;
-    private static int id = 0;
 
     public Note() {
         title = "";
@@ -53,8 +52,6 @@ public class Note {
             scribbleText = "";
         else
             scribbleText = scribbleTxt;
-
-        id++;
     }
 
     public String getTitle() {
@@ -79,12 +76,5 @@ public class Note {
 
     public void setScribbleText(String scribbleText) {
         this.scribbleText = scribbleText;
-    }
-
-    public static int getId() {
-        return id;
-    }
-    public static void setId(int id) {
-        Note.id = id;
     }
 }
