@@ -1,7 +1,9 @@
 package com.example.pavan.multi_notes;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.widget.TextView;
 
 public class Infomation extends AppCompatActivity {

@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f3a8d9e-eee9-41a6-97b6-e1aa4e964e46" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/Infomation.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Multi-Notes/app/src/main/res/layout/activity_infomation.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Multi-Notes/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/Multi-Notes/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/JsonReaderAndWriter.java" afterPath="$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/JsonReaderAndWriter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/MainActivity.java" afterPath="$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/Note.java" afterPath="$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/Note.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/NoteView.java" afterPath="$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/NoteView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Multi-Notes/app/src/main/res/layout/activity_note_view.xml" afterPath="$PROJECT_DIR$/Multi-Notes/app/src/main/res/layout/activity_note_view.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Multi-Notes/app/src/main/res/layout/notes_listview_element.xml" afterPath="$PROJECT_DIR$/Multi-Notes/app/src/main/res/layout/notes_listview_element.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Multi-Notes/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/Multi-Notes/app/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Multi-Notes/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/Multi-Notes/app/src/main/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Multi-Notes.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,12 +23,22 @@
     <favorites_list name="Multi-Notes" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="1547">
+              <caret line="224" column="63" selection-start-line="224" selection-start-column="63" selection-end-line="224" selection-end-column="63" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JsonReaderAndWriter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/JsonReaderAndWriter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="48" column="75" selection-start-line="48" selection-start-column="75" selection-end-line="48" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -84,12 +85,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="Scope" />
-      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane />
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -212,7 +213,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973032" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973032" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973032" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -237,8 +238,48 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3090">
+          <caret line="224" column="63" selection-start-line="224" selection-start-column="63" selection-end-line="224" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/JsonReaderAndWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/JsonReaderAndWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="48" column="75" selection-start-line="48" selection-start-column="75" selection-end-line="48" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Multi-Notes/app/src/main/java/com/example/pavan/multi_notes/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1547">
+          <caret line="224" column="63" selection-start-line="224" selection-start-column="63" selection-end-line="224" selection-end-column="63" />
           <folding />
         </state>
       </provider>
