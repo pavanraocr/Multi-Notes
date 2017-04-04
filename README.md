@@ -18,11 +18,7 @@ Multi-Notes
 > Reduces I/O by saving the data to the disk only when the application goes to a state of pause
 > Saves only the notes that were changed from the previous version
 
-
-Future Scope
-============
+**Future Scope**
 > Addition of different types of notes
 > Setting alarms on notes
 > Linking it to the server
-
-
